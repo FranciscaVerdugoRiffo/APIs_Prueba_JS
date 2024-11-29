@@ -5,9 +5,7 @@ const convertidorButton = document.getElementById('convertidor'); //Botón para 
 const resultadoP = document.getElementById('resultado'); //párrafo para el resultado
 const graficaDiv = document.querySelector('.grafica'); //Div de la gráfica
 const ctx = document.getElementById('myChart'); //Canvas para la gráfica
-let chart;// Variable para almacenar la gráfica
-
-
+let chart; // Variable para almacenar la gráfica
 
 convertidorButton.addEventListener('click', async () => {
     const monto = parseFloat(montoInput.value); // obtiene y convierte el monto
@@ -24,7 +22,7 @@ convertidorButton.addEventListener('click', async () => {
         if (!res.ok) throw new Error('Error al obtener los datos de la API');
         const data = await res.json(); // convierte a JSON la respuesta
 
-        console.log('Datos recibidos:', data); // Verificar si se reciben los datos correctamente
+        console.log('Datos de la API:', data); // Verificar si los datos son correctos
 
         const monedaMap = {
             usd: 'dolar',
@@ -37,22 +35,22 @@ convertidorButton.addEventListener('click', async () => {
         const convertidoMonto = (monto / rate).toFixed(2);
         resultadoP.textContent = `Equivalente: ${convertidoMonto} ${moneda.toUpperCase()}`;
 
-        const historial = data[monedaMap[moneda]]?.serie;
+        // Crear un historial simulado de 10 días (puedes cambiar estos valores a lo que prefieras)
+        const historialSimulado = [];
+        for (let i = 0; i < 10; i++) {
+            historialSimulado.push({
+                fecha: `2024-11-${(29 - i).toString().padStart(2, '0')}`, // Fecha simulada
+                valor: rate + Math.random() * 10 - 5, // Valor simulado cerca del valor actual
+            });
+        }
 
-        // Verificar si hay datos históricos disponibles
-        if (historial && Array.isArray(historial)) {
-            console.log('Historial de datos:', historial); // Verificar los datos históricos
-            const last10Dias = historial.slice(0, 10).reverse();
-            if (last10Dias.length > 0) {
-                renderChart(last10Dias, moneda); // Renderiza la gráfica con datos
-                graficaDiv.style.display = 'block'; // Asegurarse de que el gráfico se haga visible
-            } else {
-                resultadoP.textContent += ' No hay suficientes datos históricos para graficar.';
-                graficaDiv.style.display = 'none'; // Ocultar gráfico si no hay datos
-            }
+        // Verificar si el historial simulado tiene datos
+        if (historialSimulado.length > 0) {
+            renderChart(historialSimulado, moneda); // Renderiza la gráfica con datos simulados
+            graficaDiv.style.display = 'block'; // Hacer visible la gráfica
         } else {
-            resultadoP.textContent += ' No hay datos históricos disponibles para graficar.';
-            graficaDiv.style.display = 'none'; // Ocultar gráfico si no hay datos históricos
+            resultadoP.textContent += ' No hay suficientes datos históricos para graficar.';
+            graficaDiv.style.display = 'none'; // Ocultar gráfico si no hay datos
         }
     } catch (error) {
         console.error(error);
@@ -61,3 +59,46 @@ convertidorButton.addEventListener('click', async () => {
     }
 });
 
+// Función para renderizar la gráfica con los datos simulados
+function renderChart(data, moneda) {
+    const labels = data.map(item => item.fecha); // Fechas del historial
+    const valores = data.map(item => item.valor); // Valores del historial
+
+    // Si ya existe un gráfico, destruirlo antes de crear uno nuevo
+    if (chart) {
+        chart.destroy();
+    }
+
+    // Crear el gráfico
+    chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels, // Etiquetas de las fechas
+            datasets: [{
+                label: `Historial de ${moneda.toUpperCase()}`,
+                data: valores, // Datos de la serie histórica simulada
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    type: 'category',
+                    title: {
+                        display: true,
+                        text: 'Fecha',
+                    },
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: `Valor (${moneda.toUpperCase()})`,
+                    },
+                }
+            }
+        }
+    });
+}

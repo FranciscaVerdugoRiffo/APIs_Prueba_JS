@@ -75,7 +75,7 @@ button:hover {
 }
 
 .grafica {
-    display: none; /* Inicialmente oculto */
+    display: none; 
     margin-top: 20px;
     width: 80%;
     max-width: 800px;
@@ -85,6 +85,7 @@ button:hover {
 
 canvas {
     width: 100% !important;
-    height: 400px;  /* Aumenta la altura del gráfico para asegurar que se vea */
+    height: 300px; 
+    background-color: white;
 }
 
