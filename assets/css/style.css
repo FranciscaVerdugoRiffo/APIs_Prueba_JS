@@ -1,0 +1,90 @@
+body {
+    font-family: "roboto", sans-serif;
+    text-align: center;
+    background-color: #1e1e1e;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #f0f8ff;
+    font-size: 2.5em;
+}
+
+.line {
+    border: 1px solid lightblue;
+    width: 50%;
+    margin: 10px auto;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    padding-bottom: 50px;
+    background: gray;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+.container h2 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+}
+
+input[type="number"], select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.container h5 {
+    font-size: 1em;
+    margin-bottom: 5px;
+    color: white;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #85daf7;
+    color: white;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #008cba;
+}
+
+#resultado {
+    margin-top: 15px;
+    font-size: 1.2em;
+    color: #2a2a2a;
+}
+
+.grafica {
+    display: none; /* Inicialmente oculto */
+    margin-top: 20px;
+    width: 80%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+canvas {
+    width: 100% !important;
+    height: 400px;  /* Aumenta la altura del gráfico para asegurar que se vea */
+}
+
