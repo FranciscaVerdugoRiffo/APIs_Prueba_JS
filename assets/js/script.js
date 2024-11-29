@@ -35,9 +35,9 @@ convertidorButton.addEventListener('click', async () => {
         const convertidoMonto = (monto / rate).toFixed(2);
         resultadoP.textContent = `Equivalente: ${convertidoMonto} ${moneda.toUpperCase()}`;
 
-        // Crear un historial simulado de 10 días (puedes cambiar estos valores a lo que prefieras)
+        // Crear un historial simulado de 10 días (de menor a mayor)
         const historialSimulado = [];
-        for (let i = 0; i < 10; i++) {
+        for (let i = 9; i >= 0; i--) {  // Comienza desde el día 10 y va hasta el día 1
             historialSimulado.push({
                 fecha: `2024-11-${(29 - i).toString().padStart(2, '0')}`, // Fecha simulada
                 valor: rate + Math.random() * 10 - 5, // Valor simulado cerca del valor actual
